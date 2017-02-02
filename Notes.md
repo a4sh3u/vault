@@ -6,6 +6,9 @@ docker exec -ti vault cat /vault/logs/keys.txt
 
 ##############################
 # Vault status - From inside the container
+docker exec -ti vault bash
+export VAULT_ADDR=http://127.0.0.1:8200
+export VAULT_TOKEN=$(grep 'Initial Root Token:' /vault/logs/keys.txt | awk '{print $NF}')
 vault status
 vault mounts
 ##############################
@@ -23,23 +26,24 @@ vault mount-tune -max-lease-ttl=87600h production
 vault mounts
 ##############################
 # Policy creation
-vault policy-write production /vault/config/policies/production.hcl
-vault policy-write staging /vault/config/policies/staging.hcl
-vault policy-write integration /vault/config/policies/integration.hcl
+vault policy-write integration-policy /vault/config/policies/integration.hcl
+vault policy-write staging-policy /vault/config/policies/staging.hcl
+vault policy-write production-policy /vault/config/policies/production.hcl
 ##############################
 # Role Creation
-vault write auth/token/roles/integration period="8760h" allowed_policies="integration"
-vault write auth/token/roles/staging period="8760h" allowed_policies="staging"
-vault write auth/token/roles/production period="8760h" allowed_policies="production"
+vault write auth/token/roles/integration-role period="8760h" allowed_policies="integration-policy"
+vault write auth/token/roles/staging-role period="8760h" allowed_policies="staging-policy"
+vault write auth/token/roles/production-role period="8760h" allowed_policies="production-policy"
 ##############################
 # Token Creation
-# Wrap
-vault token-create -num_uses=10 -policy=production,default -wrap-ttl=20m
-
-vault path-help sys
-
-CURL_OPT="-H X-Vault-Token:$VAULT_TOKEN -X POST"
-curl ${CURL_OPT} $VAULT_ADDR/v1/sys/mounts/postgresql -d '{"type":"postgresql"}'
+vault token-create -policy=integration-policy -no-default-policy -display-name=integration-token -role=integration-role  -ttl='8760h'
+vault token-create -policy=staging-policy -no-default-policy -display-name=staging-token -role=staging-role  -ttl='8760h'
+vault token-create -policy=production-policy -no-default-policy -display-name=production-token -role=production-role  -ttl='8760h'
+##############################
+# Dummy Secret Variable creation for status check for every environment
+vault write integration/env value=int
+vault write staging/env value=stg
+vault write production/env value=prd
 
 
 
