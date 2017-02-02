@@ -44,20 +44,3 @@ vault token-create -policy=production-policy -no-default-policy -display-name=pr
 vault write integration/env value=int
 vault write staging/env value=stg
 vault write production/env value=prd
-
-
-
-
-
-
-
-
-
-
-
-
-
-# VAULT UI's
-Horrible
-docker run -p 80:80 -e VAULT_ADDR=http://192.168.178.6:8200 nyxcharon/vault-ui:latest
-docker run -d -p 8000:8000 --name vault-ui djenriquez/vault-ui
