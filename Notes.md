@@ -1,6 +1,6 @@
 # SETUP THE DOCKER VAULT CONTAINER
 docker build . -t ashu/vault:0.1
-docker run -tid --name vault -p 8200:8200 ashu/vault:0.1 server -config=/vault/config/config.hcl
+docker run -tid --name vault --cap-add IPC_LOCK -p 8200:8200 ashu/vault:0.1 server -config=/vault/config/config.hcl
 docker exec -ti vault /vault/config/init.sh
 docker exec -ti vault cat /vault/logs/keys.txt
 
