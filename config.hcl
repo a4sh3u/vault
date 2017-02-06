@@ -4,7 +4,7 @@ backend "file" {
 }
 
 listener "tcp" {
-  address = "vault-central.berlin.ubitricity.com:8200"
+  address = "192.168.178.6:8200"
   tls_cert_file = "/vault/certs/vault-central.crt"
   tls_key_file = "/vault/certs/vault-central.key"
 }
