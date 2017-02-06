@@ -4,7 +4,12 @@ backend "file" {
 }
 
 listener "tcp" {
-  address = "0.0.0.0:8200"
+  address = "127.0.0.1:8200"
+  tls_disable = 1
+}
+
+listener "tcp" {
+  address = "192.168.178.6:8200"
   tls_cert_file = "/vault/certs/vault-central.crt"
   tls_key_file = "/vault/certs/vault-central.key"
 }
