@@ -18,4 +18,4 @@ vault unseal -address=${VAULT_ADDR} $(grep 'Key 3:' /vault/logs/keys.txt | awk '
 vault auth $(grep 'Initial Root Token:' /vault/logs/keys.txt | awk '{print $NF}')
 # Enable auditing
 vault audit-enable -address=${VAULT_ADDR} file path=/vault/logs/vault_audit.log
-# Create roles for all the environments i.e. Integration, Staging and Production
+#

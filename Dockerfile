@@ -16,11 +16,13 @@ RUN addgroup vault && \
     mkdir -p /vault/logs && \
     mkdir -p /vault/db && \
     mkdir -p /vault/config && \
+    mkdir -p /vault/certs && \
     chown -R vault:vault /vault
 
 ADD config.hcl /vault/config/config.hcl
 ADD init.sh /vault/config/init.sh
 ADD policies/ /vault/config/policies/
+ADD certs/ /vault/certs/
 
 RUN chmod 0755 /vault/config/init.sh
 
