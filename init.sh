@@ -1,13 +1,10 @@
 #!/bin/sh
 
-# Run Vault Server with custom config
-#################
-# vault server -config=/vault/config/config.hcl &
-#################
-cat /vault/certs/vault-central.crt >> /etc/pki/tls/certs/ca-bundle.crt
+# Add the certificate to ssl ca-certificates.crt - so that vault can identify the given certificate as a Legitimate Certificate
+cat /vault/certs/vault-central.crt >> /etc/ssl/certs/ca-certificates.crt
 
 # Initialize the vault server
-export VAULT_ADDR=https://vault-central.berlin.ubitricity.com:8200
+export VAULT_ADDR=https://192.168.178.6:8200
 vault init -address=${VAULT_ADDR} > /vault/logs/keys.txt
 
 # Unseal the vault server

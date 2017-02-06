@@ -9,7 +9,7 @@ docker exec -ti vault cat /vault/logs/keys.txt
 ##############################
 # Vault status - From inside the container
 docker exec -ti vault bash
-export VAULT_ADDR=http://127.0.0.1:8200
+export VAULT_ADDR=https://192.168.178.6:8200
 export VAULT_TOKEN=$(grep 'Initial Root Token:' /vault/logs/keys.txt | awk '{print $NF}')
 vault status
 vault mounts

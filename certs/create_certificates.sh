@@ -1,6 +1,4 @@
 openssl req -x509 -batch -nodes -newkey rsa:2048 -keyout vault-central.key -out vault-central.crt -config cert.conf -days 3650
-cat vault-central.crt >> /etc/pki/tls/certs/ca-bundle.crt
-
 
 #############################################
 #openssl genrsa -out certs/rootCA.key 4096
