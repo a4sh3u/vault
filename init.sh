@@ -4,6 +4,7 @@
 #################
 # vault server -config=/vault/config/config.hcl &
 #################
+cat /vault/certs/vault-central.crt >> /etc/pki/tls/certs/ca-bundle.crt
 
 # Initialize the vault server
 export VAULT_ADDR=https://vault-central.berlin.ubitricity.com:8200
