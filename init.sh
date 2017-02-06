@@ -6,7 +6,7 @@
 #################
 
 # Initialize the vault server
-export VAULT_ADDR=http://127.0.0.1:8200
+export VAULT_ADDR=https://vault-central.berlin.ubitricity.com:8200
 vault init -address=${VAULT_ADDR} > /vault/logs/keys.txt
 
 # Unseal the vault server
